@@ -616,10 +616,6 @@
     color: var(--pink-deep);
 }
 
-/* View Details Button Styles */
-.view-details-btn {
-    display:
-}
 
 .page-number.active {
     background: var(--pink-deep);
@@ -758,9 +754,51 @@
     animation: fadeIn 0.3s ease;
 }
 
+
+
 /* ===== ADDITIONAL STYLES CAN BE ADDED BELOW ===== */
 /* 
 .example-new-style {
     // New styles for future features
 }
 */
+
+/* Make entire product card clickable for details */
+.product-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Ensure the add to cart button doesn't trigger the card click */
+.add-to-cart-btn {
+    position: relative;
+    z-index: 20;
+    pointer-events: auto;
+}
+
+/* Optional: Add a visual indicator that the card is clickable */
+.product-card::after {
+    content: 'Click for details';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(102, 126, 234, 0.9);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-card:hover::after {
+    opacity: 1;
+}
