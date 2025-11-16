@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Beauty Times</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/product.css">
+</head>
+<body>
+    <!-- Same header as other pages -->
+    <header class="site-header">
+        <!-- Your existing header code -->
+    </header>
+
+    <main class="product-page">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <a href="products.html">Products</a>
+                <span>/</span>
+                <span id="product-category">Product</span>
+            </div>
+
+            <!-- Product Details will be loaded here dynamically -->
+            <div class="product-detail" id="product-detail">
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <p>Loading product...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Same footer -->
+    <footer class="site-footer">
+        <!-- Your existing footer code -->
+    </footer>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/product.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skincare Products - Beauty Times</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/products.css">
+</head>
+<body>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        <div class="container">
+            <p>✨ Free shipping on orders over ₦15,000 | 30-day money-back guarantee</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="brand-logo">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U2NGNhNCIgcng9IjgiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj5CVDwvdGV4dD4KPC9zdmc+" alt="Beauty Times Logo">
+                    <h1><span class="logo-serif">Beauty</span> Times</h1>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for skincare, body care..." id="search-input">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li class="dropdown">
+                            <a href="products.html" class="active">Shop <i class="fas fa-chevron-down"></i></a>
+                            <div class="dropdown-menu">
+                                <!-- These links will auto-filter the products page -->
+                                <a href="products.html?category=face-cream">Face Creams & Serums</a>
+                                <a href="products.html?category=face-masks">Face Masks</a>
+                                <a href="products.html?category=face-scrubs">Face Scrubs & Exfoliators</a>
+                                <a href="products.html?category=body-care">Body Care</a>
+                                <a href="products.html?category=body-scrubs">Body Scrubs</a>
+                                <a href="products.html?category=hand-feet">Hand & Foot Care</a>
+                                <a href="products.html?category=fragrance">Fragrance</a>
+                                <a href="products.html?category=suncare">Sun Care</a>
+                                
+                                <!-- ADD MORE CATEGORIES HERE LATER -->
+                                <!--
+                                <a href="products.html?category=NEW_CATEGORY">New Category Name</a>
+                                -->
+                            </div>
+                        </li>
+                        <li><a href="index.html#new-arrivals">New Arrivals</a></li>
+                        <li><a href="index.html#best-sellers">Bestsellers</a></li>
+                        <li class="nav-icons">
+                            <a href="login.html" class="nav-icon" title="Account"><i class="far fa-user"></i></a>
+                            <a href="wishlist.html" class="nav-icon" title="Wishlist"><i class="far fa-heart"></i></a>
+                            <a href="cart.html" class="nav-icon cart-icon" title="Cart">
+                                <i class="fas fa-shopping-bag"></i>
+                                <span id="cart-count">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <button class="close-mobile-menu"><i class="fas fa-times"></i></button>
+        </div>
+        <nav class="mobile-nav">
+            <a href="index.html">Home</a>
+            <a href="products.html">Shop All</a>
+            <a href="index.html#new-arrivals">New Arrivals</a>
+            <a href="index.html#best-sellers">Bestsellers</a>
+            <a href="login.html">My Account</a>
+            <a href="wishlist.html">Wishlist</a>
+        </nav>
+    </div>
+
+    <main class="products-page">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span>/</span>
+                    <span class="current" id="page-category">All Products</span>
+                </div>
+                <h1 id="page-title">Skincare Collection</h1>
+                <p class="page-subtitle">Discover our premium range of skincare products for radiant, healthy skin</p>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products-section">
+            <div class="container">
+                <div class="products-layout">
+                    <!-- Sidebar Filters - Simplified -->
+                    <aside class="filters-sidebar">
+                        <div class="filters-header">
+                            <h3>Filters</h3>
+                            <button class="clear-filters" id="clear-filters">Clear All</button>
+                        </div>
+
+                        <!-- Categories Filter -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Categories</h4>
+                            <div class="filter-options" id="categories-filter">
+                                <!-- Categories will be populated by JavaScript -->
+                                <!-- ADD MORE CATEGORY OPTIONS HERE IN JS LATER -->
+                            </div>
+                        </div>
+
+                        <!-- Price Filter -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Price Range</h4>
+                            <div class="price-filter">
+                                <div class="price-inputs">
+                                    <input type="number" id="min-price" placeholder="Min" value="0" min="0">
+                                    <span>-</span>
+                                    <input type="number" id="max-price" placeholder="Max" value="50000" min="0">
+                                </div>
+                                <button class="btn btn-primary apply-price-btn" id="apply-price">Apply</button>
+                            </div>
+                        </div>
+
+                        <!-- ADD MORE FILTERS HERE LATER -->
+                        <!--
+                        <div class="filter-group">
+                            <h4 class="filter-title">Brands</h4>
+                            <div class="filter-options" id="brands-filter">
+                                Brands will be populated by JavaScript
+                            </div>
+                        </div>
+                        -->
+                    </aside>
+
+                    <!-- Main Products Area -->
+                    <div class="products-main">
+                        <!-- Products Header -->
+                        <div class="products-header">
+                            <div class="results-info">
+                                <p>Showing <span id="results-count">0</span> of <span id="total-products">0</span> products</p>
+                            </div>
+                            <div class="view-controls">
+                                <div class="sort-by">
+                                    <label for="sort-select">Sort by:</label>
+                                    <select id="sort-select">
+                                        <option value="featured">Featured</option>
+                                        <option value="newest">Newest</option>
+                                        <option value="price-low">Price: Low to High</option>
+                                        <option value="price-high">Price: High to Low</option>
+                                        <option value="rating">Customer Rating</option>
+                                        <option value="bestselling">Best Selling</option>
+                                    </select>
+                                </div>
+                                <div class="view-toggle">
+                                    <button class="view-btn active" data-view="grid" title="Grid View">
+                                        <i class="fas fa-th"></i>
+                                    </button>
+                                    <button class="view-btn" data-view="list" title="List View">
+                                        <i class="fas fa-list"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Active Filters -->
+                        <div class="active-filters" id="active-filters">
+                            <!-- Active filters will appear here -->
+                        </div>
+
+                        <!-- Products Grid -->
+                        <div class="products-container">
+                            <div class="products-grid" id="products-grid">
+                                <!-- Products will be loaded here by JavaScript -->
+                            </div>
+
+                            <!-- Loading State - Initially hidden -->
+                            <div class="loading-state" id="loading-state" style="display: none;">
+                                <div class="loading-spinner"></div>
+                                <p>Loading products...</p>
+                            </div>
+
+                            <!-- No Results State -->
+                            <div class="no-results" id="no-results" style="display: none;">
+                                <i class="fas fa-search"></i>
+                                <h3>No products found</h3>
+                                <p>Try adjusting your filters or search terms</p>
+                                <button class="btn btn-primary" id="reset-filters">Reset Filters</button>
+                            </div>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination" id="pagination">
+                            <!-- Pagination will be generated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Join the Beauty Times Family</h2>
+                <p>Subscribe to get exclusive offers, skincare tips, and early access to new products</p>
+                <form class="newsletter-form" id="newsletter-form">
+                    <div class="input-group">
+                        <input type="email" placeholder="Enter your email address" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U2NGNhNCIgcng9IjYiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj5CVDwvdGV4dD4KPC9zdmc+" alt="Beauty Times">
+                        <h3>Beauty Times</h3>
+                    </div>
+                    <p>Your trusted destination for premium skincare products and expert beauty advice.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Skincare Categories</h4>
+                    <ul>
+                        <li><a href="products.html?category=face-cream">Face Creams & Serums</a></li>
+                        <li><a href="products.html?category=face-masks">Face Masks</a></li>
+                        <li><a href="products.html?category=face-scrubs">Face Scrubs</a></li>
+                        <li><a href="products.html?category=body-care">Body Care</a></li>
+                        <li><a href="products.html?category=fragrance">Fragrance</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Customer Care</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="shipping.html">Shipping Info</a></li>
+                        <li><a href="returns.html">Returns & Exchanges</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="#">Track Order</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> hello@beautytimes.com</p>
+                        <p><i class="fas fa-phone"></i> +234 901 234 5678</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="payment-methods">
+                    <span>We Accept:</span>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                        <i class="fab fa-cc-apple-pay"></i>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; <span id="current-year"></span> Beauty Times. All rights reserved.</p>
+                    <div class="legal-links">
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="terms.html">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Filters Button -->
+    <div class="mobile-filters-btn">
+        <button class="btn btn-primary" id="mobile-filters-toggle">
+            <i class="fas fa-filter"></i>
+            Filters
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/products-simple.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
