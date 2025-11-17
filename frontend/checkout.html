@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Beauty Times</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="stylesheet" href="../css/checkout.css"> </head>
+<body>
+    <div class="announcement-bar">
+        <div class="container">
+            <p>✨ Free shipping on orders over ₦50,000</p>
+        </div>
+    </div>
+    
+    <header class="site-header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="brand-logo">
+                    <a href="index.html"><img src="../assets/logo.jpeg" alt="Beauty Times Logo"></a>
+                    <h1><span class="logo-serif">Beauty</span> Time</h1>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for skincare, body care..." id="search-input">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li class="dropdown">
+                            <a href="products.html">Shop <i class="fas fa-chevron-down"></i></a>
+                            <div class="dropdown-menu">
+                                <a href="products.html?category=face-cream">Face Creams & Serums</a>
+                                <a href="products.html?category=face-masks">Face Masks</a>
+                                <a href="products.html?category=face-scrubs">Face Scrubs & Exfoliators</a>
+                                <a href="products.html?category=body-care">Body Care</a>
+                                <a href="products.html?category=body-scrubs">Body Scrubs</a>
+                                <a href="products.html?category=hand-feet">Hand & Foot Care</a>
+                                <a href="products.html?category=fragrance">Fragrance</a>
+                                <a href="products.html?category=suncare">Sun Care</a>
+                            </div>
+                        </li>
+                        <li><a href="#new-arrivals">New Arrivals</a></li>
+                        <li><a href="#best-sellers">Bestsellers</a></li>
+                        <li class="nav-icons">
+                            <a href="cart.html" class="nav-icon cart-icon" title="Cart">
+                                <i class="fas fa-shopping-bag"></i>
+                                <span id="cart-count">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <button class="close-mobile-menu"><i class="fas fa-times"></i></button>
+        </div>
+        <nav class="mobile-nav">
+            <a href="index.html">Home</a>
+            <a href="products.html">Shop All</a>
+            <a href="#new-arrivals">New Arrivals</a>
+            <a href="#best-sellers">Bestsellers</a>
+        </nav>
+    </div>
+
+    <main class="checkout-page">
+        <div class="container">
+            <h1 class="section-title" style="text-align: center; margin-top: 40px; margin-bottom: 20px;">Secure Checkout</h1>
+            
+            <div class="checkout-layout">
+                
+                <div class="checkout-form-area">
+                    <form id="checkout-form">
+                        <h3>1. Contact Information</h3>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="e.g., jane@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="e.g., 0801 234 5678" required>
+                        </div>
+                        
+                        <h3 style="margin-top: 30px;">2. Shipping Details</h3>
+
+                        <div class="form-group-inline">
+                            <div class="form-group">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" name="first-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" name="last-name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Address Line</label>
+                            <input type="text" id="address" name="address" placeholder="House number and street name" required>
+                        </div>
+
+                        <div class="form-group-inline">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <input type="text" id="state" name="state" placeholder="e.g., Lagos" required>
+                            </div>
+                        </div>
+
+                        
+                    </form>
+                </div>
+
+                <aside class="order-summary-area">
+                    <h3>3. Order Review</h3>
+                    <div id="order-summary-details" class="summary-box">
+                        <div style="text-align: center; padding: 20px;">Order details loading...</div>
+                    </div>
+                    
+                    <div class="payment-methods" style="margin-top: 30px;">
+                        <h4>Payment</h4>
+                        <div id="payment-options">
+                            <p style="font-size: 0.95rem; color: var(--text-light);">
+                                Final payment will be processed securely using a popup window from Paystack or Flutterwave.
+                            </p>
+                            <button form="checkout-form" type="submit" id="initiate-payment-btn" class="btn btn-primary checkout-btn" style="width: 100%; margin-top: 15px;">
+                                Pay Now (₦0.00)
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <a href="index.html"><img src="../assets/logo.jpeg" alt="Beauty Times Logo"></a>
+                        <h3>Beauty Time</h3>
+                    </div>
+                    <p>Your trusted destination for premium skincare products and expert beauty advice.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Skincare Categories</h4>
+                    <ul>
+                        <li><a href="products.html?cat=face-cream">Face Creams & Serums</a></li>
+                        <li><a href="products.html?cat=face-masks">Face Masks</a></li>
+                        <li><a href="products.html?cat=face-scrubs">Face Scrubs</a></li>
+                        <li><a href="products.html?cat=body-care">Body Care</a></li>
+                        <li><a href="products.html?cat=fragrance">Fragrance</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Customer Care</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> hello@beautytimes.com</p>
+                        <p><i class="fas fa-phone"></i> +234 901 234 5678</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="payment-methods">
+                    <span>We Accept:</span>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                     
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; <span id="current-year"></span> Beauty Time. All rights reserved.</p>
+                    <div class="legal-links">
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="terms.html">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/utils.js"></script> 
+    <script src="../js/products-data.js"></script> 
+    <script src="../js/main.js"></script>
+    <script src="../js/checkout.js"></script> </body>
+</html>

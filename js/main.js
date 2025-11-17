@@ -1,4 +1,5 @@
 // Main JavaScript file - Initializes everything
+// Requires utils.js, products-data.js (for initHomepageProducts)
 document.addEventListener('DOMContentLoaded', function() {
     // Update copyright year
     const currentYearElement = document.getElementById('current-year');
@@ -62,7 +63,6 @@ function initNewsletter() {
         newsletterForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const emailInput = this.querySelector('input[type="email"]');
-            const email = emailInput ? emailInput.value : '';
             
             // Show success message
             showCartFeedback('Thank you for subscribing to our newsletter!');
@@ -73,17 +73,41 @@ function initNewsletter() {
 
 function initSearch() {
     const searchInput = document.getElementById('search-input');
-    if (searchInput && typeof Utils !== 'undefined') {
-        const debouncedSearch = Utils.debounce((query) => {
-            if (query.length > 2) {
-                console.log('Searching for:', query);
-                // Implement search functionality here
-            }
-        }, 300);
+    const searchBtn = document.querySelector('.search-btn');
 
-        searchInput.addEventListener('input', (e) => {
-            debouncedSearch(e.target.value);
+    // Function to perform the search action
+    const performSearch = (query) => {
+        if (query.trim().length > 0) {
+            // Redirects to the products page and passes the query in the URL
+            window.location.href = `products.html?search=${encodeURIComponent(query.trim())}`;
+        }
+    };
+
+    if (searchInput) {
+        // Search on input (using debounce from Utils if defined)
+        if (typeof Utils !== 'undefined') {
+            const debouncedSearch = Utils.debounce((query) => {
+                // Placeholder for live search dropdown functionality if implemented later
+            }, 300);
+
+            searchInput.addEventListener('input', (e) => {
+                debouncedSearch(e.target.value);
+            });
+        }
+
+        // 1. Search on Enter key press
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch(searchInput.value);
+            }
         });
+        
+        // 2. Search on button click
+        if (searchBtn) {
+            searchBtn.addEventListener('click', () => {
+                performSearch(searchInput.value);
+            });
+        }
     }
 }
 
@@ -110,7 +134,7 @@ function initSmoothScroll() {
     });
 }
 
-// Cart feedback function
+// Cart feedback function (Used across main.js, products.js, product.js)
 function showCartFeedback(message) {
     // Create feedback element
     const feedback = document.createElement('div');
@@ -139,7 +163,7 @@ function showCartFeedback(message) {
     }, 3000);
 }
 
-// Add to cart function
+// Add to cart function (Used across main.js, products.js, product.js)
 function addToCart(productId) {
     let cart = JSON.parse(localStorage.getItem('beautyTimesCart')) || [];
     const existingItem = cart.find(item => item.id === productId);
@@ -178,11 +202,12 @@ if (!document.querySelector('style[data-products-css]')) {
                 opacity: 1;
             }
         }
-
+        
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
+        
+        /* Quick View Modal Styles (left for consistency) */
         .quick-view-modal {
             display: none;
             position: fixed;
@@ -199,6 +224,7 @@ if (!document.querySelector('style[data-products-css]')) {
         .quick-view-modal.active {
             display: flex;
         }
+        /* ... remaining quick-view modal styles ... */
 
         .modal-content {
             background: var(--white);
@@ -283,75 +309,35 @@ if (!document.querySelector('style[data-products-css]')) {
     document.head.appendChild(style);
 }
 
-// Add this function to your main.js - Homepage products display
-function initHomepageProducts() {
-    console.log('🔄 Initializing homepage products...');
-    
-    // Sample product data for homepage
-    const sampleProducts = [
-        {
-            id: 'p001',
-            title: 'Hydrating Face Cream',
-            brand: 'SkinEssentials',
-            price: 8500,
-            originalPrice: 10000,
-            image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RkFDRSBSRUdJTUVOVFM8L3RleHQ+Cjwvc3ZnPg==',
-            rating: 4.5,
-            reviewCount: 128,
-            isNew: true,
-            isBestseller: true
-        },
-        {
-            id: 'p002',
-            title: 'Vitamin C Serum',
-            brand: 'RadiantGlow',
-            price: 12000,
-            originalPrice: 12000,
-            image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+U0VOVU0gUFJPRFVDVDwvdGV4dD4KPC9zdmc+',
-            rating: 4.8,
-            reviewCount: 95,
-            isNew: true,
-            isBestseller: false
-        },
-        {
-            id: 'p003',
-            title: 'Clay Detox Mask',
-            brand: 'PureSkin',
-            price: 6500,
-            originalPrice: 8000,
-            image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RkFDRSBNQVNLUzwvdGV4dD4KPC9zdmc+',
-            rating: 4.3,
-            reviewCount: 67,
-            isNew: false,
-            isBestseller: true
-        },
-        {
-            id: 'p004',
-            title: 'Body Butter',
-            brand: 'BodyLuxe',
-            price: 7200,
-            originalPrice: 7200,
-            image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Qk9EWSBDQVJFPC90ZXh0Pgo8L3N2Zz4=',
-            rating: 4.6,
-            reviewCount: 89,
-            isNew: true,
-            isBestseller: false
-        }
-    ];
 
-    // Render new arrivals (products that are new)
-    renderHomepageProducts('new-arrivals-grid', sampleProducts.filter(p => p.isNew));
+// Function for rendering products on the Homepage (New Arrivals/Bestsellers)
+async function initHomepageProducts() {
+    if (typeof ProductsData === 'undefined' || typeof Utils === 'undefined') {
+        console.error('ProductsData dependency missing. Cannot initialize homepage products.');
+        return;
+    }
     
-    // Render bestsellers (products that are bestsellers)
-    renderHomepageProducts('best-sellers-grid', sampleProducts.filter(p => p.isBestseller));
-    
+    console.log('🔄 Initializing homepage products...');
+
+    // Assumes ProductsData class is available globally (linked via products-data.js)
+    const dataManager = new ProductsData();
+    await dataManager.loadProducts(); 
+
+    const allProducts = dataManager.products; 
+
+    // Filter and slice the first 4 products for each section
+    const newArrivals = allProducts.filter(p => p.isNew).slice(0, 4); 
+    const bestSellers = allProducts.filter(p => p.isBestseller).slice(0, 4); 
+
+    renderHomepageProducts('new-arrivals-grid', newArrivals);
+    renderHomepageProducts('best-sellers-grid', bestSellers);
+
     console.log('✅ Homepage products initialized');
 }
 
 function renderHomepageProducts(gridId, products) {
     const grid = document.getElementById(gridId);
     if (!grid) {
-        console.error(`❌ Grid element not found: ${gridId}`);
         return;
     }
 
@@ -361,7 +347,7 @@ function renderHomepageProducts(gridId, products) {
     }
 
     grid.innerHTML = products.map(product => `
-        <div class="product-card">
+        <div class="product-card" onclick="location.href='product.html?id=${product.id}'">
             <div class="product-image">
                 <img src="${product.image}" alt="${product.title}">
                 ${product.isNew ? '<span class="product-badge new">New</span>' : ''}
@@ -373,38 +359,18 @@ function renderHomepageProducts(gridId, products) {
                 <p class="product-brand">${product.brand}</p>
                 <div class="product-rating">
                     <div class="rating-stars">
-                        ${generateStarRating(product.rating)}
+                        ${Utils.generateStarRating(product.rating)}
                     </div>
                     <span class="rating-count">(${product.reviewCount})</span>
                 </div>
                 <div class="product-price">
-                    <span class="current-price">${formatPrice(product.price)}</span>
+                    <span class="current-price">${Utils.formatPrice(product.price)}</span>
                     ${product.originalPrice > product.price ? 
-                        `<span class="original-price">${formatPrice(product.originalPrice)}</span>` : ''}
+                        `<span class="original-price">${Utils.formatPrice(product.originalPrice)}</span>` : ''}
                 </div>
-                <button class="add-to-cart" onclick="addToCart('${product.id}')">
-                    Add to Cart
+                <button class="btn btn-primary add-to-cart" onclick="event.stopPropagation(); addToCart('${product.id}')">                    Add to Cart
                 </button>
             </div>
         </div>
     `).join('');
-}
-
-function generateStarRating(rating) {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 >= 0.5;
-    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-
-    let stars = '';
-    for (let i = 0; i < fullStars; i++) stars += '<i class="fas fa-star"></i>';
-    if (hasHalfStar) stars += '<i class="fas fa-star-half-alt"></i>';
-    for (let i = 0; i < emptyStars; i++) stars += '<i class="far fa-star"></i>';
-    return stars;
-}
-
-function formatPrice(price) {
-    return new Intl.NumberFormat('en-NG', {
-        style: 'currency',
-        currency: 'NGN'
-    }).format(price);
 }

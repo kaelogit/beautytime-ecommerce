@@ -30,4 +30,17 @@ class Utils {
             cartCount.textContent = this.getCartCount();
         }
     }
+
+    // THIS FUNCTION IS NOW CORRECTLY PLACED INSIDE THE CLASS
+    static generateStarRating(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 >= 0.5;
+        const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+        let stars = '';
+        for (let i = 0; i < fullStars; i++) stars += '<i class="fas fa-star"></i>';
+        if (hasHalfStar) stars += '<i class="fas fa-star-half-alt"></i>';
+        for (let i = 0; i < emptyStars; i++) stars += '<i class="far fa-star"></i>';
+        return stars;
+    }
 }

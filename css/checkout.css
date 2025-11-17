@@ -1,0 +1,133 @@
+/* checkout.css: Styles for the Secure Checkout Page */
+
+/* Checkout Layout */
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 3fr 2fr; /* Form takes 60%, Summary takes 40% */
+    gap: 50px;
+    padding: 30px 0 80px;
+}
+
+/* ===== H3 HEADING FIX: Applies PINK COLOR to ALL checkout headings ===== */
+.checkout-form-area h3,
+.order-summary-area h3 {
+    color: var(--pink-deep); 
+    font-family: "Playfair Display", serif;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* ===== 1. FORM AREA STYLING ===== */
+#checkout-form {
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--gray-light);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+    font-size: 0.95rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: var(--pink-deep);
+    box-shadow: 0 0 0 1px var(--pink-light);
+}
+
+.form-group-inline {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group-inline .form-group {
+    flex: 1;
+}
+
+/* ===== 2. SUMMARY AREA STYLING (Summary Box) ===== */
+.summary-box {
+    background: var(--white);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+/* Summary Lines (Styles similar to cart.css summary) */
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--border);
+    font-size: 0.95rem;
+}
+
+.summary-line.total {
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding-top: 15px;
+    border-top: 2px solid var(--text);
+    border-bottom: none;
+    margin-top: 10px;
+}
+
+.summary-item-title {
+    font-weight: 500;
+}
+
+.summary-item-qty {
+    color: var(--text-light);
+}
+
+/* Payment Methods */
+.payment-methods h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--text);
+}
+
+.checkout-btn {
+    /* Uses existing btn-primary styles */
+    padding: 15px 0;
+    font-size: 1.1rem;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 992px) {
+    .checkout-layout {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        gap: 30px;
+        padding: 30px 0;
+    }
+
+    .order-summary-area {
+        order: -1; /* Move order summary above the form on mobile */
+    }
+}
+
+@media (max-width: 600px) {
+    .form-group-inline {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    #checkout-form {
+        padding: 15px;
+    }
+}

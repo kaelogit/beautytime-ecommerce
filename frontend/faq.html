@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beauty Times - Contact Us</title>
+    <title>Beauty Times - FAQ</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css"> 
-    <link rel="stylesheet" href="../css/contact.css"> </head>
+    <link rel="stylesheet" href="../css/faq.css"> </head>
 <body>
     <div class="announcement-bar">
         <div class="container">
@@ -21,7 +21,7 @@
             <div class="header-inner">
                 <div class="brand-logo">
                     <a href="index.html"><img src="../assets/logo.jpeg" alt="Beauty Times Logo"></a>
-                    <h1><span class="logo-serif">Beauty</span> Time</h1>
+                    <h1><span class="logo-serif">Beauty</span> Times</h1>
                 </div>
 
                 <!-- Search Bar -->
@@ -78,66 +78,48 @@
         </nav>
     </div>
 
-    <main>
-        <div class="container" style="padding: 60px 20px;">
-            <div class="contact-layout">
-                
-                <div class="contact-form-area">
-                    <h1 class="section-title" style="text-align: left; margin-top: 0; margin-bottom: 20px;">Get In Touch</h1>
-                    <p style="margin-bottom: 30px; color: var(--text-light);">
-                        Have a question about your order, our products, or just want to say hello? Fill out the form below, and we'll get back to you within 24 hours.
-                    </p>
-
-                    <form id="contact-form">
-                        
-                        <div class="form-group-inline" style="gap: 20px;">
-                            <div class="form-group" style="flex: 1;">
-                                <label for="name">Your Full Name</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            <div class="form-group" style="flex: 1;">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
+    <main class="faq-page">
+        <div class="container" style="padding: 60px 20px 80px;">
+            <h1 class="section-title" style="margin-bottom: 50px;">Frequently Asked Questions</h1>
+            
+            <div class="faq-section">
+                <h2>Ordering & Payment</h2>
+                <div class="faq-list" id="ordering-faq">
+                    <div class="faq-item">
+                        <button class="faq-question">Do I need an account to place an order?</button>
+                        <div class="faq-answer">
+                            <p>No, you can easily place an order using our Guest Checkout option! We only require your email for communication regarding your order.</p>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <select id="subject" name="subject" required>
-                                <option value="">Select a subject...</option>
-                                <option value="Order Inquiry">Order Inquiry</option>
-                                <option value="Product Question">Product Question</option>
-                                <option value="Feedback/Suggestions">Feedback/Suggestions</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">Your Message</label>
-                            <textarea id="message" name="message" rows="6" required></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" style="padding: 12px 30px;">Send Message</button>
-                    </form>
-                </div>
-                
-                <div class="contact-info-area">
-                    <h2 style="font-family: 'Playfair Display', serif; margin-bottom: 20px;">Our Details</h2>
-                    
-                    <div class="contact-info" style="margin-bottom: 30px;">
-                        <p><i class="fas fa-envelope" style="color: var(--pink-deep);"></i> hello@beautytimes.com</p>
-                        <p><i class="fas fa-phone" style="color: var(--pink-deep);"></i> +234 901 234 5678</p>
-                        <p><i class="fas fa-map-marker-alt" style="color: var(--pink-deep);"></i> Lagos, Nigeria (Office Hours: Mon-Fri, 9am-5pm)</p>
                     </div>
                     
-                    <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 15px;">Follow Us</h3>
-                    <div class="social-links">
-                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <div class="faq-item">
+                        <button class="faq-question">What payment methods do you accept?</button>
+                        <div class="faq-answer">
+                            <p>We accept Visa, Mastercard, and we are working to integrate popular local payment methods like Paystack and Flutterwave soon.</p>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="faq-section" style="margin-top: 40px;">
+                <h2>Products & Ingredients</h2>
+                <div class="faq-list" id="product-faq">
+                    <div class="faq-item">
+                        <button class="faq-question">Are your products suitable for sensitive skin?</button>
+                        <div class="faq-answer">
+                            <p>Yes, many of our formulations are designed to be gentle and suitable for sensitive skin types. Please check the individual product pages for specific ingredient lists and patch testing recommendations.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">Are your products cruelty-free?</button>
+                        <div class="faq-answer">
+                            <p>Yes, Beauty Times is committed to being 100% cruelty-free. We do not test on animals.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -147,7 +129,7 @@
                 <div class="footer-section">
                     <div class="footer-logo">
                         <a href="index.html"><img src="../assets/logo.jpeg" alt="Beauty Times Logo"></a>
-                        <h3>Beauty Time</h3>
+                        <h3>Beauty Times</h3>
                     </div>
                     <p>Your trusted destination for premium skincare products and expert beauty advice.</p>
                     <div class="social-links">
@@ -193,7 +175,7 @@
                     <div class="payment-icons">
                         <i class="fab fa-cc-visa"></i>
                         <i class="fab fa-cc-mastercard"></i>
-                    
+                        
                     </div>
                 </div>
                 <div class="copyright">
@@ -209,6 +191,5 @@
 
     <script src="../js/utils.js"></script>
     <script src="../js/main.js"></script>
-    <script src="../js/contact.js"></script> 
-</body>
+    <script src="../js/faq.js"></script> </body>
 </html>
