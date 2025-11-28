@@ -145,7 +145,7 @@ function handleCheckoutSubmission(e) {
     };
 
     // 2. Create Order in Django (Status: Pending)
-    fetch('http://127.0.0.1:8000/api/create-order/', {
+    fetch('https://beautytimes-backend.onrender.com/api/create-order/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderDataForBackend),
@@ -166,7 +166,7 @@ function handleCheckoutSubmission(e) {
                 // Payment Successful!
                 callback: function(response) {
                     // 4. Tell Backend to Update Status to "Paid"
-                    fetch('http://127.0.0.1:8000/api/update-payment/', {
+                    fetch('https://beautytimes-backend.onrender.com/api/update-payment/', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ 
@@ -201,7 +201,7 @@ function handleCheckoutSubmission(e) {
 
     // --- 3. SEND TO BACKEND API ---
     // Note: We need to create this API endpoint in Django next!
-    const API_URL = 'http://127.0.0.1:8000/api/create-order/';
+    const API_URL = 'https://beautytimes-backend.onrender.com/api/create-order/';
 
     fetch(API_URL, {
         method: 'POST',

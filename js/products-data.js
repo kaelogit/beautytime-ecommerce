@@ -20,7 +20,7 @@ class ProductsData {
 
     async loadProducts() {
         // Define the absolute URL of your running Django server
-        const BASE_URL = 'http://127.0.0.1:8000';
+        const BASE_URL = 'https://beautytimes-backend.onrender.com';
         const API_URL = `${BASE_URL}/api/products/`; 
         
         try {

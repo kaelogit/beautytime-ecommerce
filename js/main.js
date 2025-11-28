@@ -76,7 +76,7 @@ function initNewsletter() {
 
             try {
                 // Send to Django Backend
-                const response = await fetch('http://127.0.0.1:8000/api/newsletter/', {
+                const response = await fetch('https://beautytimes-backend.onrender.com/api/newsletter/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

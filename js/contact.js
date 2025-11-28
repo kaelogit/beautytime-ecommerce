@@ -39,7 +39,7 @@ function handleContactSubmission(e) {
 
     // 4. Send to Backend
     // Ensure your Django server is running on this port
-    const API_URL = 'http://127.0.0.1:8000/api/contact/';
+    const API_URL = 'https://beautytimes-backend.onrender.com/api/contact/';
 
     fetch(API_URL, {
         method: 'POST',
