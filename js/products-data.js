@@ -1,4 +1,4 @@
-// Products data for the products page
+// Products data for the products page - NOW FETCHING FROM DJANGO API
 class ProductsData {
     constructor() {
         this.products = [];
@@ -19,160 +19,48 @@ class ProductsData {
     }
 
     async loadProducts() {
-        // Extended product data for the products page
-        this.products = [
-            {
-                id: 'p001',
-                title: 'Hydrating Face Cream with Hyaluronic Acid',
-                brand: 'SkinEssentials',
-                price: 8500,
-                originalPrice: 10000,
-                image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+RkFDRSBSRUdJTUVOVFM8L3RleHQ+Cjwvc3ZnPg==',
-                category: 'face-cream',
-                brandSlug: 'skin-essentials',
-                skinType: ['dry', 'normal'],
-                concerns: ['dullness', 'aging'],
-                rating: 4.5,
-                reviewCount: 128,
-                isNew: true,
-                isBestseller: true,
-                inStock: true
-            },
-            {
-                id: 'p002',
-                title: 'Vitamin C Brightening Serum',
-                brand: 'RadiantGlow',
-                price: 12000,
-                originalPrice: 12000,
-                image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+U0VOVU0gUFJPRFVDVDwvdGV4dD4KPC9zdmc+',
-                category: 'face-serum',
-                brandSlug: 'radiant-glow',
-                skinType: ['all'],
-                concerns: ['dark-spots', 'dullness'],
-                rating: 4.8,
-                reviewCount: 95,
-                isNew: true,
-                isBestseller: false,
-                inStock: true
-            },
-            {
-                id: 'p003',
-                title: 'Clay Detox Mask for Oily Skin',
-                brand: 'PureSkin',
-                price: 6500,
-                originalPrice: 8000,
-                image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RkFDRSBNQVNLUzwvdGV4dD4KPC9zdmc+',
-                category: 'face-masks',
-                brandSlug: 'pure-skin',
-                skinType: ['oily', 'combination'],
-                concerns: ['acne', 'redness'],
-                rating: 4.3,
-                reviewCount: 67,
-                isNew: false,
-                isBestseller: true,
-                inStock: true
-            },
-            {
-                id: 'p004',
-                title: 'Luxury Body Butter with Shea',
-                brand: 'BodyLuxe',
-                price: 7200,
-                originalPrice: 7200,
-                image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Qk9EWSBDQVJFPC90ZXh0Pgo8L3N2Zz4=',
-                category: 'body-care',
-                brandSlug: 'body-luxe',
-                skinType: ['dry', 'normal'],
-                concerns: ['dullness'],
-                rating: 4.6,
-                reviewCount: 89,
-                isNew: true,
-                isBestseller: false,
-                inStock: true
-            },
-            {
-                id: 'p005',
-                title: 'Gentle Face Scrub with Jojoba Beads',
-                brand: 'SoftTouch',
-                price: 5500,
-                originalPrice: 6500,
-                image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzY2NiIgdGV4dC2hbmNob3I9Im1pZGRsZSI+RkFDRSBTQ1JVQlM8L3RleHQ+Cjwvc3ZnPg==',
-                category: 'face-scrubs',
-                brandSlug: 'soft-touch',
-                skinType: ['sensitive', 'normal'],
-                concerns: ['dullness'],
-                rating: 4.4,
-                reviewCount: 112,
-                isNew: false,
-                isBestseller: true,
-                inStock: true
-            },
-            {
-                id: 'p006',
-                title: 'Floral Eau de Parfum',
-                brand: 'ScentEssence',
-                price: 15000,
-                originalPrice: 18000,
-                image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RlJBR1JBTkNFPC90ZXh0Pgo8L3N2Zz4=',
-                category: 'fragrance',
-                brandSlug: 'scent-essence',
-                skinType: ['all'],
-                concerns: [],
-                rating: 4.7,
-                reviewCount: 203,
-                isNew: true,
-                isBestseller: false,
-                inStock: true
-            },
-            // Add more products to reach 24...
-            {
-                id: 'p007',
-                title: 'Overnight Repair Cream',
-                brand: 'SkinEssentials',
-                price: 9500,
-                originalPrice: 11000,
-                image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+T0ZFUk1JR0hUIENSRUFNPC90ZXh0Pgo8L3N2Zz4=',
-                category: 'face-cream',
-                brandSlug: 'skin-essentials',
-                skinType: ['dry', 'sensitive'],
-                concerns: ['aging', 'redness'],
-                rating: 4.2,
-                reviewCount: 78,
-                isNew: false,
-                isBestseller: true,
-                inStock: true
-            },
-            {
-                id: 'p008',
-                title: 'Hydrating Sheet Mask Pack (5 pieces)',
-                brand: 'PureSkin',
-                price: 4500,
-                originalPrice: 6000,
-                image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+U0hFRVQgTUFTS1M8L3RleHQ+Cjwvc3ZnPg==',
-                category: 'face-masks',
-                brandSlug: 'pure-skin',
-                skinType: ['all'],
-                concerns: ['dullness'],
-                rating: 4.5,
-                reviewCount: 134,
-                isNew: true,
-                isBestseller: false,
-                inStock: true
+        // Define the absolute URL of your running Django server
+        const BASE_URL = 'http://127.0.0.1:8000';
+        const API_URL = `${BASE_URL}/api/products/`; 
+        
+        try {
+            const response = await fetch(API_URL); 
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        ];
+            
+            const apiProducts = await response.json();
+            
+            this.products = apiProducts.map(p => ({
+                id: p.id.toString(),
+                title: p.title,
+                brand: p.brand,
+                
+                price: parseFloat(p.price), 
+                originalPrice: p.original_price ? parseFloat(p.original_price) : 0,
+                
+                // 1. Main Image (Absolute URL)
+                image: p.image ? `${BASE_URL}${p.image}` : '', 
+                
+                // 2. CRITICAL FIX: Map the Image Gallery and make URLs absolute
+                image_gallery: p.image_gallery ? p.image_gallery.map(img => ({
+                    url: `${BASE_URL}${img.url}`,
+                    is_main: img.is_main
+                })) : [],
 
-        // Duplicate products to have more data for demonstration
-        for (let i = 9; i <= 24; i++) {
-            const originalProduct = this.products[(i - 1) % 8];
-            this.products.push({
-                ...originalProduct,
-                id: `p${i.toString().padStart(3, '0')}`,
-                price: originalProduct.price + Math.floor(Math.random() * 2000),
-                originalPrice: originalProduct.originalPrice + Math.floor(Math.random() * 2000),
-                rating: 4 + Math.random(),
-                reviewCount: Math.floor(Math.random() * 200) + 50,
-                isNew: Math.random() > 0.7,
-                isBestseller: Math.random() > 0.5
-            });
+                category: p.category,
+                rating: 4.5, 
+                reviewCount: 1, 
+                isNew: p.is_new,
+                isBestseller: p.is_bestseller,
+                inStock: p.in_stock,
+                description: p.description
+            }));
+            
+        } catch (error) {
+            console.error('Failed to load products from API.', error);
+            this.products = [];
         }
     }
 
@@ -181,35 +69,6 @@ class ProductsData {
             // Category filter
             if (this.filters.categories.length > 0 && !this.filters.categories.includes(product.category)) {
                 return false;
-            }
-
-            // Brand filter
-            if (this.filters.brands.length > 0 && !this.filters.brands.includes(product.brandSlug)) {
-                return false;
-            }
-
-            // Skin type filter
-            if (this.filters.skinTypes.length > 0) {
-                const hasMatchingSkinType = this.filters.skinTypes.some(type => 
-                    product.skinType.includes(type) || product.skinType.includes('all')
-                );
-                if (!hasMatchingSkinType) return false;
-            }
-
-            // Concerns filter
-            if (this.filters.concerns.length > 0) {
-                const hasMatchingConcern = this.filters.concerns.some(concern =>
-                    product.concerns.includes(concern)
-                );
-                if (!hasMatchingConcern) return false;
-            }
-
-            // Rating filter
-            if (this.filters.ratings.length > 0) {
-                const meetsRating = this.filters.ratings.some(rating =>
-                    product.rating >= parseInt(rating)
-                );
-                if (!meetsRating) return false;
             }
 
             // Price range filter
@@ -294,7 +153,5 @@ class ProductsData {
     }
 }
 
-// Export for use in other files
-let productsData;
 // Make ProductsData available globally
 window.ProductsData = ProductsData;

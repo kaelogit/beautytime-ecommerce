@@ -60,13 +60,47 @@ function initMobileMenu() {
 function initNewsletter() {
     const newsletterForm = document.getElementById('newsletter-form');
     if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
+        newsletterForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            const emailInput = this.querySelector('input[type="email"]');
             
-            // Show success message
-            showCartFeedback('Thank you for subscribing to our newsletter!');
-            this.reset();
+            const emailInput = this.querySelector('input[type="email"]');
+            const email = emailInput ? emailInput.value : '';
+            const submitBtn = this.querySelector('button');
+
+            if (!email) return;
+
+            // Change button text to show loading
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+
+            try {
+                // Send to Django Backend
+                const response = await fetch('http://127.0.0.1:8000/api/newsletter/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showCartFeedback(result.message); // Success!
+                    this.reset(); // Clear the input
+                } else {
+                    alert(result.message); // Show error (e.g., "Already subscribed")
+                }
+
+            } catch (error) {
+                console.error('Newsletter error:', error);
+                alert('Something went wrong. Please try again.');
+            } finally {
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
         });
     }
 }

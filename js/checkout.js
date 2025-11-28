@@ -1,5 +1,8 @@
 // checkout.js: Logic for loading the order summary and handling checkout form submission.
 
+// Global variable to hold loaded products for access across functions
+let loadedProducts = [];
+
 document.addEventListener('DOMContentLoaded', async () => {
     // Check dependencies
     if (typeof Utils === 'undefined' || typeof ProductsData === 'undefined') {
@@ -10,10 +13,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Initialize data manager and load product details ONCE
     const dataManager = new ProductsData();
     await dataManager.loadProducts();
-    const products = dataManager.products; // Store the full product list
+    loadedProducts = dataManager.products; // Store globally for the submission handler
 
     // Pass the loaded products to the rendering function
-    renderOrderSummary(products);
+    renderOrderSummary(loadedProducts);
 
     // Attach listener for the final form submission
     const checkoutForm = document.getElementById('checkout-form');
@@ -28,9 +31,10 @@ function getEnrichedCart(products) {
     
     // Use the products passed from the main block
     return cart.map(item => {
-        const productDetail = products.find(p => p.id === item.id);
+        // String conversion ensures ID matching works (1 vs "1")
+        const productDetail = products.find(p => String(p.id) === String(item.id));
         return productDetail ? { ...item, ...productDetail } : null;
-    }).filter(item => item !== null); // Filter out items not found in product data
+    }).filter(item => item !== null); 
 }
 
 /** Renders the order summary and calculates the final total */
@@ -38,11 +42,11 @@ function renderOrderSummary(products) {
     const summaryContainer = document.getElementById('order-summary-details');
     const paymentButton = document.getElementById('initiate-payment-btn');
     
-    const enrichedCart = getEnrichedCart(products); // Use the corrected function call
+    const enrichedCart = getEnrichedCart(products); 
     
     // Fixed costs
-    const SHIPPING_COST = 2500;
-    const FREE_SHIPPING_THRESHOLD = 50000;
+    const SHIPPING_COST = 5000; // Updated to 5000
+    const FREE_SHIPPING_THRESHOLD = 80000;
     let subtotal = 0;
 
     if (enrichedCart.length === 0) {
@@ -95,90 +99,143 @@ function renderOrderSummary(products) {
     if (paymentButton) {
         paymentButton.textContent = `Pay Now (${Utils.formatPrice(grandTotal)})`;
         paymentButton.disabled = false;
-        // Store total amount on the button for easy access during payment initiation
         paymentButton.dataset.amount = grandTotal; 
     }
 }
 
 
-/** Handles the form submission, preparing the order object for API submission. */
+/** Handles the form submission */
+/** Handles the form submission and triggers Paystack */
 function handleCheckoutSubmission(e) {
     e.preventDefault();
 
     const form = e.target;
     const paymentButton = document.getElementById('initiate-payment-btn');
     
-    // --- 1. Basic Validation ---
     if (!form.checkValidity()) {
         alert("Please fill out all required shipping and contact fields.");
         return;
     }
 
-    paymentButton.disabled = true; // Prevent double submission
+    paymentButton.disabled = true; 
+    paymentButton.textContent = "Processing Order...";
 
     const formData = new FormData(form);
     const shippingDetails = Object.fromEntries(formData.entries());
     const amount = paymentButton.dataset.amount;
-    const cartItems = getEnrichedCart(dataManager.products); 
+    const cartItems = getEnrichedCart(loadedProducts); 
 
-    // --- 2. CONSTRUCT THE COMPLETE ORDER OBJECT ---
+    // 1. Prepare Order Data
     const orderDataForBackend = {
-        orderId: 'ORD-' + Date.now(), 
-        totalAmount: parseFloat(amount), // Ensure amount is a number
-        currency: 'NGN', 
-        customerDetails: {
+        total_amount: parseFloat(amount),
+        customer: {
+            first_name: shippingDetails['first-name'],
+            last_name: shippingDetails['last-name'],
             email: shippingDetails.email,
             phone: shippingDetails.phone,
-            firstName: shippingDetails['first-name'],
-            lastName: shippingDetails['last-name'],
-        },
-        shippingAddress: {
-            addressLine: shippingDetails.address,
+            address: shippingDetails.address,
             city: shippingDetails.city,
             state: shippingDetails.state,
         },
         items: cartItems.map(item => ({
-            productId: item.id,
+            product_id: item.id,
             quantity: item.quantity,
-            priceAtTimeOfOrder: item.price,
-        })),
-        date: new Date().toISOString(),
-        paymentStatus: 'Pending' 
+            price: item.price
+        }))
     };
 
-    // --- 3. CRITICAL: BACKEND API SIMULATION ---
-    
-    // In a real application, you would use 'fetch' to POST this data to your backend API:
-    /*
-    fetch('/api/v1/create-order', {
+    // 2. Create Order in Django (Status: Pending)
+    fetch('http://127.0.0.1:8000/api/create-order/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderDataForBackend),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const orderId = data.order_id;
+            
+            // 3. Open Paystack Popup
+            const handler = PaystackPop.setup({
+                key: 'pk_test_fed9bf23a9bf19fe8d89f9c56d0d84f56eb77ded', // <--- PASTE YOUR KEY HERE
+                email: shippingDetails.email,
+                amount: amount * 100, // Convert to kobo
+                currency: 'NGN',
+                ref: 'ORD-' + orderId + '-' + Date.now(),
+                
+                // Payment Successful!
+                callback: function(response) {
+                    // 4. Tell Backend to Update Status to "Paid"
+                    fetch('http://127.0.0.1:8000/api/update-payment/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            order_id: orderId,
+                            reference: response.reference 
+                        })
+                    }).then(() => {
+                        // 5. Final Cleanup & Redirect
+                        localStorage.removeItem('beautyTimesCart');
+                        window.location.href = 'success.html'; // Create this page next!
+                    });
+                },
+                onClose: function() {
+                    alert('Transaction was not completed.');
+                    paymentButton.disabled = false;
+                    paymentButton.textContent = `Pay Now (${Utils.formatPrice(amount)})`;
+                }
+            });
+            handler.openIframe();
+
+        } else {
+            throw new Error(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        paymentButton.disabled = false;
+        paymentButton.textContent = 'Try Again';
+        alert('Could not initialize payment. Please try again.');
+    }); 
+}
+
+    // --- 3. SEND TO BACKEND API ---
+    // Note: We need to create this API endpoint in Django next!
+    const API_URL = 'http://127.0.0.1:8000/api/create-order/';
+
+    fetch(API_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(orderDataForBackend),
     })
-    .then(response => response.json())
-    .then(serverOrderResponse => {
-        // Step 4: Initiate payment redirection using data from the server response
-        // initiatePaymentGateway(serverOrderResponse.transactionId, ...);
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Order created successfully!
+            if (typeof showCartFeedback !== 'undefined') {
+                showCartFeedback(`Order #${data.order_id} Created! Proceeding to payment...`);
+            }
+            
+            // HERE IS WHERE YOU WOULD INTEGRATE PAYSTACK POPUP
+            alert(`Order Successful! Order ID: ${data.order_id}. In a real app, Paystack opens now.`);
+            
+            // Clear cart and redirect
+            localStorage.removeItem('beautyTimesCart');
+            window.location.href = 'index.html'; 
+        } else {
+            throw new Error(data.message || 'Unknown error');
+        }
     })
     .catch(error => {
-        console.error('Error submitting order to backend:', error);
-        paymentButton.disabled = false; // Re-enable button on failure
-        alert('Could not submit order. Please try again.');
-    });
-    */
-
-    // TEMPORARY FRONTEND LOGGING (Until backend is ready)
-    console.log("Order Data Ready for Backend API (JSON):", JSON.stringify(orderDataForBackend, null, 2));
-
-    if (typeof showCartFeedback !== 'undefined') {
-        const finalAmount = amount || 0; 
-        showCartFeedback(`Order data prepared. Ready to send to server and proceed to payment of ${Utils.formatPrice(finalAmount)}.`);
-    }
-
-    // You would typically redirect here after the API success response
-    // setTimeout(() => { window.location.href = 'FLUTTERWAVE_INIT_LINK'; }, 1500); 
-    
-    paymentButton.disabled = false; // Re-enable for further testing without backend
-}
+        console.error('Error submitting order:', error);
+        paymentButton.disabled = false;
+        paymentButton.textContent = `Pay Now (${Utils.formatPrice(amount)})`;
+        alert('Could not create order. Please try again.');
+    }); 

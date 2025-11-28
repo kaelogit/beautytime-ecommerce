@@ -1,4 +1,4 @@
-// contact.js: Handles form submission for the Contact Us page, preparing data for API.
+// contact.js: Handles form submission for the Contact Us page via Django API.
 
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form');
@@ -13,61 +13,64 @@ function handleContactSubmission(e) {
 
     const form = e.target;
     const submitButton = form.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
 
+    // 1. Basic Validation
     if (!form.checkValidity()) {
         alert("Please fill out all required fields.");
         return;
     }
 
+    // 2. Disable button and show loading state
     submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
 
+    // 3. Prepare Data
     const formData = new FormData(form);
     const messageData = Object.fromEntries(formData.entries());
 
-    // --- Data Structured for Backend ---
+    // Data structure matching the Django View expectation
     const dataForAPI = {
         name: messageData.name,
         email: messageData.email,
         subject: messageData.subject,
-        message: messageData.message,
-        timestamp: new Date().toISOString() // Server will typically handle this, but it's good for the client to send it
+        message: messageData.message
     };
 
-    // --- TEMPORARY FRONTEND SIMULATION ---
-    console.log("Contact Form Data Prepared (JSON):", JSON.stringify(dataForAPI, null, 2));
+    // 4. Send to Backend
+    // Ensure your Django server is running on this port
+    const API_URL = 'http://127.0.0.1:8000/api/contact/';
 
-    if (typeof showCartFeedback !== 'undefined') {
-        showCartFeedback("Thank you! Your message has been sent successfully.");
-    } else {
-        alert("Thank you! Your message has been sent successfully.");
-    }
-    
-    // Clear the form after simulated success
-    form.reset();
-    
-    // --- FUTURE BACKEND INTEGRATION POINT ---
-    /* // In the future, you would uncomment this fetch block:
-    fetch('/api/v1/contact', {
+    fetch(API_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json' 
+        },
         body: JSON.stringify(dataForAPI)
     })
-    .then(response => {
-        if (!response.ok) throw new Error('Failed to submit message.');
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        // Handle success response from backend
+        if (data.success) {
+            // Success: Show feedback
+            if (typeof showCartFeedback !== 'undefined') {
+                showCartFeedback(data.message);
+            } else {
+                alert(data.message);
+            }
+            form.reset(); // Clear the form
+        } else {
+            // Server returned an error (e.g. invalid data)
+            alert('Something went wrong: ' + data.message);
+        }
     })
     .catch(error => {
+        // Network or Server Error
         console.error('Submission error:', error);
-        alert('There was an error submitting your message. Please try again.');
+        alert('There was an error submitting your message. Please ensure the server is running.');
     })
     .finally(() => {
-        submitButton.disabled = false; // Re-enable button regardless of outcome
+        // 5. Cleanup: Re-enable button
+        submitButton.textContent = originalButtonText;
+        submitButton.disabled = false; 
     });
-    */
-    
-    // Re-enable button for testing purposes on the frontend
-    submitButton.disabled = false; 
 }

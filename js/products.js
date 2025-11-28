@@ -289,11 +289,3 @@ function searchProducts(products, query) {
         p.brand.toLowerCase().includes(lowerQuery)
     );
 }
-
-// Mock function for wishlist (to avoid errors)
-function toggleWishlist(productId) {
-    console.log(`Toggling wishlist state for product: ${productId}`);
-    if (typeof showCartFeedback !== 'undefined') {
-        showCartFeedback('Wishlist status updated!');
-    }
-}

@@ -9,64 +9,72 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialize data manager to get product details
     const dataManager = new ProductsData();
-    await dataManager.loadProducts();
+    try {
+        await dataManager.loadProducts();
+    } catch (error) {
+        console.error("Error loading products for cart:", error);
+    }
 
-    renderCart();
+    // Pass the loaded products to the render function
+    renderCart(dataManager.products);
 
     // Attach listener for quantity changes and removal (delegation)
-    document.getElementById('cart-items-container').addEventListener('click', (e) => {
-        const target = e.target;
-        
-        if (target.matches('.quantity-btn')) {
-            const productId = target.closest('.cart-item').dataset.id;
-            const action = target.dataset.action;
-            updateCartItemQuantity(productId, action);
-        } else if (target.matches('.remove-btn')) {
-            const productId = target.closest('.cart-item').dataset.id;
-            removeCartItem(productId);
-        }
-    });
+    const cartContainer = document.getElementById('cart-items-container');
+    if (cartContainer) {
+        cartContainer.addEventListener('click', (e) => {
+            const target = e.target;
+            
+            // Handle clicks on buttons or icons inside buttons
+            const quantityBtn = target.closest('.quantity-btn');
+            const removeBtn = target.closest('.remove-btn');
+
+            if (quantityBtn) {
+                const productId = quantityBtn.closest('.cart-item').dataset.id;
+                const action = quantityBtn.dataset.action;
+                updateCartItemQuantity(productId, action, dataManager.products);
+            } else if (removeBtn) {
+                const productId = removeBtn.closest('.cart-item').dataset.id;
+                removeCartItem(productId, dataManager.products);
+            }
+        });
+    }
 });
 
-/** Retrieves enriched cart items (with product details) */
-function getEnrichedCart() {
+/** Retrieves enriched cart items using the loaded product list */
+function getEnrichedCart(products) {
     const cart = JSON.parse(localStorage.getItem('beautyTimesCart')) || [];
     
-    // Safety check for dependency access
-    if (typeof ProductsData === 'undefined') return [];
+    // Safety check
+    if (!products || products.length === 0) return [];
 
-    const dataManager = new ProductsData();
-    // Assuming products are loaded synchronously by this point for efficiency
-    if (dataManager.products.length === 0) {
-        dataManager.loadProducts();
-    }
-    
     return cart.map(item => {
-        const productDetail = dataManager.products.find(p => p.id === item.id);
+        // CRITICAL FIX: Convert both IDs to String to ensure "1" matches 1
+        const productDetail = products.find(p => String(p.id) === String(item.id));
         return productDetail ? { ...item, ...productDetail } : null;
-    }).filter(item => item !== null); // Filter out items not found in product data
+    }).filter(item => item !== null); 
 }
 
 /** Renders the cart items and summary */
-function renderCart() {
+function renderCart(products) {
     const cartItemsContainer = document.getElementById('cart-items-container');
     const emptyCartMessage = document.getElementById('empty-cart-message');
     const summaryElement = document.querySelector('.cart-summary');
     
-    const enrichedCart = getEnrichedCart();
+    const enrichedCart = getEnrichedCart(products);
 
+    // Toggle Empty State vs List
     if (enrichedCart.length === 0) {
-        cartItemsContainer.style.display = 'none';
+        cartItemsContainer.style.display = 'none'; // Hides "Loading..."
         summaryElement.style.display = 'none';
         emptyCartMessage.style.display = 'block';
         
-        // Ensure global cart count is 0
         if (typeof Utils !== 'undefined') {
             Utils.updateCartCount();
         }
         return;
     }
 
+    // Show Cart State
     emptyCartMessage.style.display = 'none';
     cartItemsContainer.style.display = 'block';
     summaryElement.style.display = 'block';
@@ -99,25 +107,30 @@ function renderCart() {
         `;
     }).join('');
 
-    updateCartSummary(subtotal);
+    updateCartSummary(subtotal, enrichedCart.length);
 }
 
 /** Updates the totals in the order summary box */
-function updateCartSummary(subtotal) {
-    const shippingCost = 2500; // Fixed shipping for now (₦2,500)
+function updateCartSummary(subtotal, count) {
+    const shippingCost = 4000; 
     const total = subtotal + shippingCost;
-    const enrichedCart = getEnrichedCart();
 
-    document.getElementById('cart-subtotal').textContent = Utils.formatPrice(subtotal);
-    document.getElementById('shipping-cost').textContent = Utils.formatPrice(shippingCost);
-    document.getElementById('cart-total').textContent = Utils.formatPrice(total);
-    document.getElementById('item-count').textContent = enrichedCart.length;
+    const subtotalEl = document.getElementById('cart-subtotal');
+    const shippingEl = document.getElementById('shipping-cost');
+    const totalEl = document.getElementById('cart-total');
+    const countEl = document.getElementById('item-count');
+
+    if (subtotalEl) subtotalEl.textContent = Utils.formatPrice(subtotal);
+    if (shippingEl) shippingEl.textContent = Utils.formatPrice(shippingCost);
+    if (totalEl) totalEl.textContent = Utils.formatPrice(total);
+    if (countEl) countEl.textContent = count;
 }
 
 /** Updates quantity and saves to localStorage */
-function updateCartItemQuantity(productId, action) {
+function updateCartItemQuantity(productId, action, products) {
     let cart = JSON.parse(localStorage.getItem('beautyTimesCart')) || [];
-    const itemIndex = cart.findIndex(item => item.id === productId);
+    // Convert ID to string for finding index
+    const itemIndex = cart.findIndex(item => String(item.id) === String(productId));
 
     if (itemIndex > -1) {
         if (action === 'increase') {
@@ -128,8 +141,8 @@ function updateCartItemQuantity(productId, action) {
         
         localStorage.setItem('beautyTimesCart', JSON.stringify(cart));
         
-        // Re-render the cart and update global count
-        renderCart(); 
+        // Re-render
+        renderCart(products); 
         if (typeof Utils !== 'undefined') {
             Utils.updateCartCount();
         }
@@ -137,19 +150,19 @@ function updateCartItemQuantity(productId, action) {
 }
 
 /** Removes an item completely from the cart */
-function removeCartItem(productId) {
+function removeCartItem(productId, products) {
     let cart = JSON.parse(localStorage.getItem('beautyTimesCart')) || [];
-    const updatedCart = cart.filter(item => item.id !== productId);
+    // Filter by converting IDs to strings
+    const updatedCart = cart.filter(item => String(item.id) !== String(productId));
 
     localStorage.setItem('beautyTimesCart', JSON.stringify(updatedCart));
     
-    // Re-render the cart and update global count
-    renderCart();
+    // Re-render
+    renderCart(products);
     if (typeof Utils !== 'undefined') {
         Utils.updateCartCount();
     }
     
-    // Provide user feedback
     if (typeof showCartFeedback !== 'undefined') {
         showCartFeedback('Item removed from cart.');
     }
