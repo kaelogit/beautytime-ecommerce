@@ -116,9 +116,6 @@
         padding: 30px 0;
     }
 
-    .order-summary-area {
-        order: -1; /* Move order summary above the form on mobile */
-    }
 }
 
 @media (max-width: 600px) {
