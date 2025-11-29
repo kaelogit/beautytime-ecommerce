@@ -704,6 +704,25 @@
     .products-grid.list-view .product-info {
         padding: 15px;
     }
+
+    .filters-sidebar {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 85%; /* Takes up most of the screen */
+        height: 100%;
+        background: var(--white);
+        z-index: 3000; /* On top of everything */
+        overflow-y: auto;
+        padding: 20px;
+        box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .filters-sidebar.active {
+        display: block; /* Show it when the class 'active' is added */
+    }
 }
 
 @media (max-width: 480px) {

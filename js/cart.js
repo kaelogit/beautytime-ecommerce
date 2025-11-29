@@ -112,7 +112,7 @@ function renderCart(products) {
 
 /** Updates the totals in the order summary box */
 function updateCartSummary(subtotal, count) {
-    const shippingCost = 4000; 
+    const shippingCost = 5000; 
     const total = subtotal + shippingCost;
 
     const subtotalEl = document.getElementById('cart-subtotal');

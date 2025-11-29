@@ -1040,6 +1040,10 @@ body {
     cursor: pointer;
 }
 
+.breadcrumb {
+    display: none !important;
+}
+
 .mobile-nav {
     padding: 20px;
 }
