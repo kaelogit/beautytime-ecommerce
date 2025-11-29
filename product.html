@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beauty Times - Skincare Education</title>
+    <title>Product Details - Beauty Times</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/product.css">
 </head>
 <body>
+    <!-- Same header as other pages -->
+    
     <header class="site-header">
         <div class="container">
             <div class="header-inner">
                 <div class="brand-logo">
-                    <a href="index.html"><img src="../assets/logo.jpeg" alt="Beauty Times Logo"></a>
+                    <a href="index.html"><img src="assets/logo.jpeg" alt="Beauty Times Logo"></a>
                     <h1><span class="logo-serif">Beauty</span> Time</h1>
                 </div>
 
@@ -64,66 +67,29 @@
         </div>
     </header>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <div class="mobile-menu-header">
-            <button class="close-mobile-menu"><i class="fas fa-times"></i></button>
-        </div>
-        <nav class="mobile-nav">
-            <a href="index.html">Home</a>
-            <a href="products.html">Shop All</a>
-            <a href="#new-arrivals">New Arrivals</a>
-            <a href="#best-sellers">Bestsellers</a>
-        </nav>
-    </div>
 
-    <main>
-        <div class="container" style="padding: 60px 20px;">
-            <h1 class="section-title">Skincare Education</h1>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto 60px; color: var(--text-light);">
-                Expert advice, routine guides, and ingredient breakdowns to help you achieve your best skin yet.
-            </p>
+    <main class="product-page">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <a href="products.html">Products</a>
+                <span>/</span>
+                <span id="product-category">Product</span>
+            </div>
 
-            <div class="tips-grid">
-                <article class="tip-card">
-                    <div class="tip-image">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+Uk9VVElORSBHVUlERTwvdGV4dD4KPC9zdmc+" alt="Skincare Routine">
-                    </div>
-                    <div class="tip-content">
-                        <span class="tip-category">Routine Guide</span>
-                        <h3>Build Your Perfect Skincare Routine</h3>
-                        <p>Learn how to layer products correctly for maximum effectiveness.</p>
-                        <a href="blog/skincare-routine.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </article>
-
-                <article class="tip-card">
-                    <div class="tip-image">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+SU5HUkVESUVOVFM8L3RleHQ+Cjwvc3ZnPg==" alt="Ingredients Guide">
-                    </div>
-                    <div class="tip-content">
-                        <span class="tip-category">Ingredients</span>
-                        <h3>Understanding Skincare Ingredients</h3>
-                        <p>Your guide to active ingredients and what they really do.</p>
-                        <a href="blog/ingredients-guide.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </article>
-
-                <article class="tip-card">
-                    <div class="tip-image">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+U0VBU09OQUwgQ0FSRTwvdGV4dD4KPC9zdmc+" alt="Seasonal Care">
-                    </div>
-                    <div class="tip-content">
-                        <span class="tip-category">Seasonal Care</span>
-                        <h3>Adapting Your Skincare to Nigerian Weather</h3>
-                        <p>How to adjust your routine for humid summers and dry harmattan.</p>
-                        <a href="blog/seasonal-care.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </article>
+            <!-- Product Details will be loaded here dynamically -->
+            <div class="product-detail" id="product-detail">
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <p>Loading product...</p>
+                </div>
             </div>
         </div>
     </main>
 
+    <!-- Same footer -->
     <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
@@ -178,11 +144,11 @@
                     <div class="payment-icons">
                         <i class="fab fa-cc-visa"></i>
                         <i class="fab fa-cc-mastercard"></i>
-                    
+                       
                     </div>
                 </div>
                 <div class="copyright">
-                    <p>&copy; <span id="current-year"></span> Beauty Times. All rights reserved.</p>
+                    <p>&copy; <span id="current-year"></span> Beauty Time. All rights reserved.</p>
                     <div class="legal-links">
                         <a href="privacy.html">Privacy Policy</a>
                         <a href="terms.html">Terms of Service</a>
@@ -192,7 +158,9 @@
         </div>
     </footer>
 
-    <script src="../js/utils.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/products-data.js"></script>  
+    <script src="js/product.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

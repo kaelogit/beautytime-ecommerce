@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details - Beauty Times</title>
+    <title>Shopping Cart - Beauty Times</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/product.css">
-</head>
+    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="css/cart.css"> </head>
 <body>
-    <!-- Same header as other pages -->
-    
+    <div class="announcement-bar">
+        <div class="container">
+            <p>✨ Free shipping on orders over ₦80,000</p>
+        </div>
+    </div>
+        
     <header class="site-header">
         <div class="container">
             <div class="header-inner">
                 <div class="brand-logo">
-                    <a href="index.html"><img src="../assets/logo.jpeg" alt="Beauty Times Logo"></a>
+                    <a href="index.html"><img src="assets/logo.jpeg" alt="Beauty Times Logo"></a>
                     <h1><span class="logo-serif">Beauty</span> Time</h1>
                 </div>
 
@@ -67,35 +70,67 @@
         </div>
     </header>
 
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <button class="close-mobile-menu"><i class="fas fa-times"></i></button>
+        </div>
+        <nav class="mobile-nav">
+            <a href="index.html">Home</a>
+            <a href="products.html">Shop All</a>
+            <a href="#new-arrivals">New Arrivals</a>
+            <a href="#best-sellers">Bestsellers</a>
+        </nav>
+    </div>
 
-    <main class="product-page">
+    <main class="cart-page">
         <div class="container">
-            <!-- Breadcrumb -->
-            <div class="breadcrumb">
-                <a href="index.html">Home</a>
-                <span>/</span>
-                <a href="products.html">Products</a>
-                <span>/</span>
-                <span id="product-category">Product</span>
+            <h1 class="section-title" style="text-align: left; margin-top: 20px;">Your Shopping Bag</h1>
+            
+            <div class="cart-layout">
+                <div class="cart-items" id="cart-items-container">
+                    <div class="loading-state" style="padding: 40px; text-align: center;">
+                        <p>Loading cart...</p>
+                    </div>
+                </div>
+
+                <aside class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-line">
+                        <span>Subtotal (<span id="item-count">0</span> items)</span>
+                        <span id="cart-subtotal">₦0.00</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Shipping Estimate</span>
+                        <span id="shipping-cost">₦2,500.00</span>
+                    </div>
+                    <div class="summary-line total-line">
+                        <strong>Estimated Total</strong>
+                        <strong id="cart-total">₦2,500.00</strong>
+                    </div>
+                    <a href="checkout.html" class="btn btn-primary checkout-btn" id="checkout-btn">Proceed to Checkout</a>
+                    <p class="continue-shopping">
+                        <a href="products.html">← Continue Shopping</a>
+                    </p>
+                </aside>
             </div>
 
-            <!-- Product Details will be loaded here dynamically -->
-            <div class="product-detail" id="product-detail">
-                <div class="loading-state">
-                    <div class="loading-spinner"></div>
-                    <p>Loading product...</p>
-                </div>
+            <div class="empty-cart" id="empty-cart-message" style="display:none; text-align: center; padding: 80px 0;">
+                <i class="fas fa-shopping-bag" style="font-size: 3rem; color: var(--pink-light); margin-bottom: 20px;"></i>
+                <h2>Your Bag is Empty</h2>
+                <p>Looks like you haven't added anything to your cart yet.</p>
+                <a href="products.html" class="btn btn-primary" style="margin-top: 20px;">Start Shopping</a>
             </div>
+
         </div>
     </main>
-
-    <!-- Same footer -->
+        
     <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <a href="index.html"><img src="../assets/logo.jpeg" alt="Beauty Times Logo"></a>
+                        <a href="index.html"><img src="assets/logo.jpeg" alt="Beauty Times Logo"></a>
                         <h3>Beauty Time</h3>
                     </div>
                     <p>Your trusted destination for premium skincare products and expert beauty advice.</p>
@@ -131,7 +166,7 @@
                 <div class="footer-section">
                     <h4>Contact Info</h4>
                     <div class="contact-info">
-                        <p><i class="fas fa-envelope"></i> hello@beautytimes.com</p>
+                        <p><i class="fas fa-envelope"></i> hello@beautytime.com</p>
                         <p><i class="fas fa-phone"></i> +234 901 234 5678</p>
                         <p><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</p>
                     </div>
@@ -144,7 +179,7 @@
                     <div class="payment-icons">
                         <i class="fab fa-cc-visa"></i>
                         <i class="fab fa-cc-mastercard"></i>
-                       
+                        
                     </div>
                 </div>
                 <div class="copyright">
@@ -158,8 +193,17 @@
         </div>
     </footer>
 
-    <script src="../js/utils.js"></script>
-    <script src="../js/products-data.js"></script>  <script src="../js/product.js"></script>
-    <script src="../js/main.js"></script>
-</body>
+    <!-- Mobile Filters Button -->
+    <div class="mobile-filters-btn">
+        <button class="btn btn-primary" id="mobile-filters-toggle">
+            <i class="fas fa-filter"></i>
+            Filters
+        </button>
+    </div>
+    
+
+    <script src="js/utils.js"></script> 
+    <script src="js/products-data.js"></script> 
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script> </body>
 </html>
