@@ -360,8 +360,11 @@ async function initHomepageProducts() {
     const allProducts = dataManager.products; 
 
     // Filter and slice the first 4 products for each section
-    const newArrivals = allProducts.filter(p => p.isNew).slice(0, 4); 
-    const bestSellers = allProducts.filter(p => p.isBestseller).slice(0, 4); 
+    const allNew = allProducts.filter(p => p.isNew);
+    const allBest = allProducts.filter(p => p.isBestseller);
+
+    const newArrivals = shuffleArray(allNew).slice(0, 8); 
+    const bestSellers = shuffleArray(allBest).slice(0, 8);
 
     renderHomepageProducts('new-arrivals-grid', newArrivals);
     renderHomepageProducts('best-sellers-grid', bestSellers);
@@ -407,4 +410,8 @@ function renderHomepageProducts(gridId, products) {
             </div>
         </div>
     `).join('');
+}
+
+function shuffleArray(array) {
+    return array.sort(() => 0.5 - Math.random());
 }

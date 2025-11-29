@@ -19,7 +19,7 @@ class ProductsData {
     }
 
     async loadProducts() {
-        // Define the absolute URL of your running Django server
+        // Define the absolute URL of your Live Render Backend
         const BASE_URL = 'https://beautytimes-backend.onrender.com';
         const API_URL = `${BASE_URL}/api/products/`; 
         
@@ -40,10 +40,10 @@ class ProductsData {
                 price: parseFloat(p.price), 
                 originalPrice: p.original_price ? parseFloat(p.original_price) : 0,
                 
-                // 1. Main Image (Absolute URL)
+                // Main Image
                 image: p.image ? `${BASE_URL}${p.image}` : '', 
                 
-                // 2. CRITICAL FIX: Map the Image Gallery and make URLs absolute
+                // Image Gallery
                 image_gallery: p.image_gallery ? p.image_gallery.map(img => ({
                     url: `${BASE_URL}${img.url}`,
                     is_main: img.is_main
@@ -57,6 +57,9 @@ class ProductsData {
                 inStock: p.in_stock,
                 description: p.description
             }));
+
+            // --- NEW: Randomize the order immediately after loading ---
+            this.products.sort(() => 0.5 - Math.random());
             
         } catch (error) {
             console.error('Failed to load products from API.', error);
@@ -113,13 +116,10 @@ class ProductsData {
                 });
                 break;
             default: // featured
-                this.filteredProducts.sort((a, b) => {
-                    if (a.isBestseller && !b.isBestseller) return -1;
-                    if (!a.isBestseller && b.isBestseller) return 1;
-                    if (a.isNew && !b.isNew) return -1;
-                    if (!a.isNew && b.isNew) return 1;
-                    return b.rating - a.rating;
-                });
+                // --- CHANGED: Do nothing here! ---
+                // This preserves the random shuffle we applied in loadProducts()
+                // instead of forcing a specific "Bestseller" order.
+                break;
         }
     }
 
