@@ -25,10 +25,15 @@ class Utils {
     }
 
     static updateCartCount() {
-        const cartCount = document.getElementById('cart-count');
-        if (cartCount) {
-            cartCount.textContent = this.getCartCount();
-        }
+        const count = this.getCartCount();
+        
+        // Update Desktop Icon
+        const cartCountDesktop = document.getElementById('cart-count');
+        if (cartCountDesktop) cartCountDesktop.textContent = count;
+
+        // Update Mobile Icon
+        const cartCountMobile = document.getElementById('cart-count-mobile');
+        if (cartCountMobile) cartCountMobile.textContent = count;
     }
 
     // THIS FUNCTION IS NOW CORRECTLY PLACED INSIDE THE CLASS

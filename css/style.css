@@ -1141,8 +1141,16 @@ body {
 }
 
 @media (max-width: 768px) {
+
+    .header-inner {
+    flex-wrap: wrap; 
+    gap: 10px;
+    }
     .search-bar {
-        display: none;
+    display: flex; /* Turn it back on! */
+    order: 3;      /* Force it to the bottom of the header */
+    flex: 0 0 100%; /* Make it take full width */
+    margin: 10px 0 0 0;
     }
     
     .main-nav {
@@ -1151,6 +1159,12 @@ body {
     
     .mobile-menu-btn {
         display: block;
+    }
+
+    .mobile-only {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Push to the right */
     }
     
     .hero-content {
