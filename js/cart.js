@@ -112,8 +112,12 @@ function renderCart(products) {
 
 /** Updates the totals in the order summary box */
 function updateCartSummary(subtotal, count) {
-    const shippingCost = 5000; 
-    const total = subtotal + shippingCost;
+    const SHIPPING_COST = 5000; 
+    const FREE_SHIPPING_THRESHOLD = 90000; // Must match checkout.js
+
+    // Calculate shipping based on threshold
+    const finalShipping = (subtotal >= FREE_SHIPPING_THRESHOLD) ? 0 : SHIPPING_COST;
+    const total = subtotal + finalShipping;
 
     const subtotalEl = document.getElementById('cart-subtotal');
     const shippingEl = document.getElementById('shipping-cost');
@@ -121,7 +125,15 @@ function updateCartSummary(subtotal, count) {
     const countEl = document.getElementById('item-count');
 
     if (subtotalEl) subtotalEl.textContent = Utils.formatPrice(subtotal);
-    if (shippingEl) shippingEl.textContent = Utils.formatPrice(shippingCost);
+    
+    // Update Shipping Display
+    if (shippingEl) {
+        shippingEl.textContent = finalShipping === 0 ? 'FREE' : Utils.formatPrice(finalShipping);
+        // Optional: Make "FREE" green
+        shippingEl.style.color = finalShipping === 0 ? 'var(--pink-deep)' : 'inherit';
+        shippingEl.style.fontWeight = finalShipping === 0 ? 'bold' : 'normal';
+    }
+
     if (totalEl) totalEl.textContent = Utils.formatPrice(total);
     if (countEl) countEl.textContent = count;
 }

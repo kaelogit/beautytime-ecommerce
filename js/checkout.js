@@ -46,7 +46,7 @@ function renderOrderSummary(products) {
     
     // Fixed costs
     const SHIPPING_COST = 5000; // Updated to 5000
-    const FREE_SHIPPING_THRESHOLD = 80000;
+    const FREE_SHIPPING_THRESHOLD = 90000;
     let subtotal = 0;
 
     if (enrichedCart.length === 0) {
