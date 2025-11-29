@@ -28,6 +28,10 @@ body {
     line-height: 1.6;
 }
 
+.mobile-only {
+    display: none;
+}
+
 .container {
     max-width: var(--container);
     margin: 0 auto;

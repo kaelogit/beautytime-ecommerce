@@ -13,33 +13,14 @@
     <header class="site-header">
         <div class="container">
             <div class="header-inner">
-                    <div class="brand-logo">
-                        <a href="index.html"><img src="assets/logo.jpeg" alt="Beauty Times Logo"></a>
-                        <h1><span class="logo-serif">Beauty</span> Time</h1>
-                    </div>
+                <div class="brand-logo">
+                    <a href="index.html"><img src="assets/logo.jpeg" alt="Beauty Times Logo"></a>
+                    <h1><span class="logo-serif">Beauty</span> Time</h1>
+                </div>
 
-                    <div class="search-bar">
-                        <input type="text" placeholder="Search..." id="search-input">
-                        <button class="search-btn"><i class="fas fa-search"></i></button>
-                    </div>
-
-                    <nav class="main-nav">
-                        <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li class="dropdown">
-                                <a href="products.html">Shop <i class="fas fa-chevron-down"></i></a>
-                                </li>
-                            <li><a href="index.html#new-arrivals">New</a></li>
-                            </ul>
-                    </nav>
-
-                    <div class="header-controls mobile-only">
-                        <a href="cart.html" class="nav-icon cart-icon" style="margin-right: 15px; color: var(--text); position: relative;">
-                            <i class="fas fa-shopping-bag"></i>
-                            <span id="cart-count-mobile" style="position: absolute; top: -8px; right: -8px; background: var(--pink-deep); color: #fff; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">0</span>
-                        </a>
-                        
-                    </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for skincare, body care..." id="search-input">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
                 </div>
 
                 <nav class="main-nav">
@@ -52,20 +33,24 @@
                                 <a href="products.html?category=cleansers">Cleansers</a>
                                 <a href="products.html?category=toner">Toner</a>
                                 <a href="products.html?category=wipes">Wipes</a>
-                                <a href="products.html?category=face-scrubs">Scrubs</a>
+                                <a href="products.html?category=face-scrubs">Face Scrubs</a>
                                 <a href="products.html?category=face-serums">Face Serums</a>
-                                <a href="products.html?category=face-creams">Face Creams</a>
-                                <a href="products.html?category=sunscreen">Sunscreen</a>
+                                <a href="products.html?category=face-cream">Face Cream</a>
+                                <a href="products.html?category=face-sunscreen">Face Sunscreen</a>
+                                
                                 <div class="dropdown-divider" style="border-top: 1px solid #eee; margin: 5px 0;"></div>
+                                
                                 <a href="products.html?category=body-soaps">Body Soaps</a>
                                 <a href="products.html?category=body-creams">Body Creams</a>
                                 <a href="products.html?category=hand-creams">Hand Creams</a>
                                 <a href="products.html?category=perfumes">Perfumes</a>
                                 <a href="products.html?category=cotton-pads">Cotton Pads</a>
+                                <a href="products.html?category=skincare-sets">Sets & Bundles</a>
                             </div>
                         </li>
-                        <li><a href="#new-arrivals">New Arrivals</a></li>
-                        <li><a href="#best-sellers">Bestsellers</a></li>
+                        <li><a href="index.html#new-arrivals">New Arrivals</a></li>
+                        <li><a href="index.html#best-sellers">Bestsellers</a></li>
+                        
                         <li class="nav-icons">
                             <a href="cart.html" class="nav-icon cart-icon" title="Cart">
                                 <i class="fas fa-shopping-bag"></i>
@@ -75,15 +60,19 @@
                     </ul>
                 </nav>
 
-                <!-- Mobile Menu Button -->
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <div class="header-controls mobile-only">
+                    <a href="cart.html" class="nav-icon cart-icon" style="margin-right: 15px; color: var(--text); position: relative;">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span id="cart-count-mobile" style="position: absolute; top: -8px; right: -8px; background: var(--pink-deep); color: #fff; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">0</span>
+                    </a>
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Mobile Menu -->
     <div class="mobile-menu">
         <div class="mobile-menu-header">
             <button class="close-mobile-menu"><i class="fas fa-times"></i></button>
@@ -91,19 +80,25 @@
         <nav class="mobile-nav">
             <a href="index.html">Home</a>
             
-            <div style="padding: 15px 0; font-weight: bold; color: var(--pink-deep);">Shop Categories</div>
+            <div style="padding: 15px 0 5px; font-weight: bold; color: var(--pink-deep); border-bottom: 1px solid #eee;">Shop Categories</div>
             
-            <a href="products.html?category=face-cream" style="padding-left: 15px; font-size: 0.9rem;">Face Creams</a>
-            <a href="products.html?category=face-serums" style="padding-left: 15px; font-size: 0.9rem;">Serums</a>
-            <a href="products.html?category=body-creams" style="padding-left: 15px; font-size: 0.9rem;">Body Creams</a>
             <a href="products.html?category=face-wash" style="padding-left: 15px; font-size: 0.9rem;">Face Wash</a>
+            <a href="products.html?category=cleansers" style="padding-left: 15px; font-size: 0.9rem;">Cleansers</a>
+            <a href="products.html?category=toner" style="padding-left: 15px; font-size: 0.9rem;">Toner</a>
+            <a href="products.html?category=face-serums" style="padding-left: 15px; font-size: 0.9rem;">Face Serums</a>
+            <a href="products.html?category=face-cream" style="padding-left: 15px; font-size: 0.9rem;">Face Cream</a>
+            <a href="products.html?category=face-sunscreen" style="padding-left: 15px; font-size: 0.9rem;">Sunscreen</a>
+            <a href="products.html?category=body-creams" style="padding-left: 15px; font-size: 0.9rem;">Body Creams</a>
+            <a href="products.html?category=body-soaps" style="padding-left: 15px; font-size: 0.9rem;">Body Soaps</a>
+            <a href="products.html?category=perfumes" style="padding-left: 15px; font-size: 0.9rem;">Perfumes</a>
             <a href="products.html?category=skincare-sets" style="padding-left: 15px; font-size: 0.9rem;">Sets & Bundles</a>
+
             <a href="index.html#new-arrivals" style="margin-top: 10px;">New Arrivals</a>
             <a href="contact.html">Contact Us</a>
             <a href="faq.html">FAQ</a>
         </nav>
     </div>
-
+    
     <main>
         <div class="container" style="padding: 60px 20px;">
             <h1 class="section-title">Skincare Education</h1>
@@ -114,7 +109,7 @@
             <div class="tips-grid">
                 <article class="tip-card">
                     <div class="tip-image">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+Uk9VVElORSBHVUlERTwvdGV4dD4KPC9zdmc+" alt="Skincare Routine">
+                        <img src="assets/skincare-routine.jpeg" alt="Skincare Routine">
                     </div>
                     <div class="tip-content">
                         <span class="tip-category">Routine Guide</span>
@@ -126,7 +121,7 @@
 
                 <article class="tip-card">
                     <div class="tip-image">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+SU5HUkVESUVOVFM8L3RleHQ+Cjwvc3ZnPg==" alt="Ingredients Guide">
+                        <img src="assets/ingredient-guide.jpeg" alt="Ingredients Guide">
                     </div>
                     <div class="tip-content">
                         <span class="tip-category">Ingredients</span>
@@ -138,7 +133,7 @@
 
                 <article class="tip-card">
                     <div class="tip-image">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhjOGRjIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+U0VBU09OQUwgQ0FSRTwvdGV4dD4KPC9zdmc+" alt="Seasonal Care">
+                        <img src="assets/seasonal-care.jpeg" alt="Seasonal Care">
                     </div>
                     <div class="tip-content">
                         <span class="tip-category">Seasonal Care</span>
