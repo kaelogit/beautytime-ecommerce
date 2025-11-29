@@ -351,7 +351,6 @@ async function initHomepageProducts() {
         return;
     }
     
-    console.log('🔄 Initializing homepage products...');
 
     // Assumes ProductsData class is available globally (linked via products-data.js)
     const dataManager = new ProductsData();
@@ -369,7 +368,6 @@ async function initHomepageProducts() {
     renderHomepageProducts('new-arrivals-grid', newArrivals);
     renderHomepageProducts('best-sellers-grid', bestSellers);
 
-    console.log('✅ Homepage products initialized');
 }
 
 function renderHomepageProducts(gridId, products) {
