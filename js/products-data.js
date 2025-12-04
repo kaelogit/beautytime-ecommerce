@@ -19,26 +19,27 @@ class ProductsData {
     }
 
     async loadProducts() {
-        // Define the absolute URL of your running Django server
-        const BASE_URL = 'http://127.0.0.1:8000'; 
-        // NOTE: When you deploy to Render, change BASE_URL to your Render URL
-        
+        // 1. Define the URL of your LIVE Render Backend
+        // (Make sure this is your actual Render link)
+        const BASE_URL = 'https://beautytimes-backend.onrender.com'; 
         const API_URL = `${BASE_URL}/api/products/`; 
         
         try {
+            // 2. Ask the server for data
             const response = await fetch(API_URL); 
             
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
+            // 3. Get the real list from Django
             const apiProducts = await response.json();
             
+            // 4. Format it for your website
             this.products = apiProducts.map(p => {
-                // --- SMART IMAGE URL HANDLER ---
-                // If the image comes from Cloudinary, it already starts with "http"
-                // If it's local, it starts with "/static", so we add BASE_URL
-                
+                // Smart Image Logic:
+                // If it's a Cloudinary link (starts with http), use it directly.
+                // If it's a local path, add the BASE_URL.
                 let mainImage = '';
                 if (p.image) {
                     mainImage = p.image.startsWith('http') ? p.image : `${BASE_URL}${p.image}`;
@@ -51,17 +52,17 @@ class ProductsData {
                         is_main: img.is_main
                     }));
                 }
-                // -------------------------------
 
                 return {
                     id: p.id.toString(),
                     title: p.title,
                     brand: p.brand,
+                    
                     price: parseFloat(p.price),
                     originalPrice: p.original_price ? parseFloat(p.original_price) : 0,
                     
-                    image: mainImage,        // Use the smart URL
-                    image_gallery: galleryImages, // Use the smart URLs
+                    image: mainImage,
+                    image_gallery: galleryImages,
                     
                     category: p.category,
                     rating: 4.5, 
@@ -72,6 +73,9 @@ class ProductsData {
                     description: p.description
                 };
             });
+            
+            // 5. Randomize the order (Optional - keeps site fresh)
+            this.products.sort(() => 0.5 - Math.random());
             
         } catch (error) {
             console.error('Failed to load products from API.', error);
