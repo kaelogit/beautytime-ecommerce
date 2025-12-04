@@ -159,6 +159,10 @@ body {
     visibility: hidden;
     transform: translateY(10px);
     transition: all 0.3s;
+    max-height: 400px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--pink-deep) #f1f1f1;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -1147,6 +1151,7 @@ body {
         grid-column: span 2;
     }
 }
+
 
 @media (max-width: 768px) {
 

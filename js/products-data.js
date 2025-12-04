@@ -19,8 +19,10 @@ class ProductsData {
     }
 
     async loadProducts() {
-        // Define the absolute URL of your Live Render Backend
-        const BASE_URL = 'https://beautytimes-backend.onrender.com';
+        // Define the absolute URL of your running Django server
+        const BASE_URL = 'http://127.0.0.1:8000'; 
+        // NOTE: When you deploy to Render, change BASE_URL to your Render URL
+        
         const API_URL = `${BASE_URL}/api/products/`; 
         
         try {
@@ -32,34 +34,44 @@ class ProductsData {
             
             const apiProducts = await response.json();
             
-            this.products = apiProducts.map(p => ({
-                id: p.id.toString(),
-                title: p.title,
-                brand: p.brand,
+            this.products = apiProducts.map(p => {
+                // --- SMART IMAGE URL HANDLER ---
+                // If the image comes from Cloudinary, it already starts with "http"
+                // If it's local, it starts with "/static", so we add BASE_URL
                 
-                price: parseFloat(p.price), 
-                originalPrice: p.original_price ? parseFloat(p.original_price) : 0,
-                
-                // Main Image
-                image: p.image ? `${BASE_URL}${p.image}` : '', 
-                
-                // Image Gallery
-                image_gallery: p.image_gallery ? p.image_gallery.map(img => ({
-                    url: `${BASE_URL}${img.url}`,
-                    is_main: img.is_main
-                })) : [],
+                let mainImage = '';
+                if (p.image) {
+                    mainImage = p.image.startsWith('http') ? p.image : `${BASE_URL}${p.image}`;
+                }
 
-                category: p.category,
-                rating: 4.5, 
-                reviewCount: 1, 
-                isNew: p.is_new,
-                isBestseller: p.is_bestseller,
-                inStock: p.in_stock,
-                description: p.description
-            }));
+                let galleryImages = [];
+                if (p.image_gallery) {
+                    galleryImages = p.image_gallery.map(img => ({
+                        url: img.url.startsWith('http') ? img.url : `${BASE_URL}${img.url}`,
+                        is_main: img.is_main
+                    }));
+                }
+                // -------------------------------
 
-            // --- NEW: Randomize the order immediately after loading ---
-            this.products.sort(() => 0.5 - Math.random());
+                return {
+                    id: p.id.toString(),
+                    title: p.title,
+                    brand: p.brand,
+                    price: parseFloat(p.price),
+                    originalPrice: p.original_price ? parseFloat(p.original_price) : 0,
+                    
+                    image: mainImage,        // Use the smart URL
+                    image_gallery: galleryImages, // Use the smart URLs
+                    
+                    category: p.category,
+                    rating: 4.5, 
+                    reviewCount: 1, 
+                    isNew: p.is_new,
+                    isBestseller: p.is_bestseller,
+                    inStock: p.in_stock,
+                    description: p.description
+                };
+            });
             
         } catch (error) {
             console.error('Failed to load products from API.', error);

@@ -34,7 +34,7 @@ function getEnrichedCart(products) {
         // String conversion ensures ID matching works (1 vs "1")
         const productDetail = products.find(p => String(p.id) === String(item.id));
         return productDetail ? { ...item, ...productDetail } : null;
-    }).filter(item => item !== null); 
+    }).filter(item => item !== null); // Filter out items not found in product data
 }
 
 /** Renders the order summary and calculates the final total */
@@ -99,12 +99,12 @@ function renderOrderSummary(products) {
     if (paymentButton) {
         paymentButton.textContent = `Pay Now (${Utils.formatPrice(grandTotal)})`;
         paymentButton.disabled = false;
+        // Store total amount on the button for easy access during payment initiation
         paymentButton.dataset.amount = grandTotal; 
     }
 }
 
 
-/** Handles the form submission */
 /** Handles the form submission and triggers Paystack */
 function handleCheckoutSubmission(e) {
     e.preventDefault();
@@ -112,6 +112,7 @@ function handleCheckoutSubmission(e) {
     const form = e.target;
     const paymentButton = document.getElementById('initiate-payment-btn');
     
+    // --- 1. Basic Validation ---
     if (!form.checkValidity()) {
         alert("Please fill out all required shipping and contact fields.");
         return;
@@ -123,9 +124,11 @@ function handleCheckoutSubmission(e) {
     const formData = new FormData(form);
     const shippingDetails = Object.fromEntries(formData.entries());
     const amount = paymentButton.dataset.amount;
+    
+    // Use the global loadedProducts variable (Corrected from dataManager.products)
     const cartItems = getEnrichedCart(loadedProducts); 
 
-    // 1. Prepare Order Data
+    // --- 2. CONSTRUCT THE COMPLETE ORDER OBJECT ---
     const orderDataForBackend = {
         total_amount: parseFloat(amount),
         customer: {
@@ -144,20 +147,30 @@ function handleCheckoutSubmission(e) {
         }))
     };
 
-    // 2. Create Order in Django (Status: Pending)
-    fetch('https://beautytimes-backend.onrender.com/api/create-order/', {
+    // --- 3. SEND TO BACKEND API ---
+    // Note: Update this URL to your LIVE Render URL
+    const API_URL = 'https://beautytimes-backend.onrender.com/api/create-order/';
+
+    fetch(API_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify(orderDataForBackend),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
             const orderId = data.order_id;
             
             // 3. Open Paystack Popup
             const handler = PaystackPop.setup({
-                key: 'pk_test_fed9bf23a9bf19fe8d89f9c56d0d84f56eb77ded', // <--- PASTE YOUR KEY HERE
+                key: 'pk_test_fed9bf23a9bf19fe8d89f9c56d0d84f56eb77ded', // Your Test Key
                 email: shippingDetails.email,
                 amount: amount * 100, // Convert to kobo
                 currency: 'NGN',
@@ -176,7 +189,7 @@ function handleCheckoutSubmission(e) {
                     }).then(() => {
                         // 5. Final Cleanup & Redirect
                         localStorage.removeItem('beautyTimesCart');
-                        window.location.href = 'success.html'; // Create this page next!
+                        window.location.href = 'success.html'; 
                     });
                 },
                 onClose: function() {
@@ -198,44 +211,3 @@ function handleCheckoutSubmission(e) {
         alert('Could not initialize payment. Please try again.');
     }); 
 }
-
-    // --- 3. SEND TO BACKEND API ---
-    // Note: We need to create this API endpoint in Django next!
-    const API_URL = 'https://beautytimes-backend.onrender.com/api/create-order/';
-
-    fetch(API_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderDataForBackend),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            // Order created successfully!
-            if (typeof showCartFeedback !== 'undefined') {
-                showCartFeedback(`Order #${data.order_id} Created! Proceeding to payment...`);
-            }
-            
-            // HERE IS WHERE YOU WOULD INTEGRATE PAYSTACK POPUP
-            alert(`Order Successful! Order ID: ${data.order_id}. In a real app, Paystack opens now.`);
-            
-            // Clear cart and redirect
-            localStorage.removeItem('beautyTimesCart');
-            window.location.href = 'index.html'; 
-        } else {
-            throw new Error(data.message || 'Unknown error');
-        }
-    })
-    .catch(error => {
-        console.error('Error submitting order:', error);
-        paymentButton.disabled = false;
-        paymentButton.textContent = `Pay Now (${Utils.formatPrice(amount)})`;
-        alert('Could not create order. Please try again.');
-    }); 
